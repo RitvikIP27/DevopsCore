@@ -1,0 +1,8 @@
+*.retry
+*.log
+*.tmp
+*.swp
+*.pem
+.env
+.vscode/
+__pycache__/
