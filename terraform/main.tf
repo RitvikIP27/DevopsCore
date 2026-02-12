@@ -25,7 +25,7 @@ data "aws_ami" "amazon_linux" {
 # create instance
 resource "aws_instance" "server" {
   ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t2.micro"
+  instance_type = "t3.micro"
 
   tags = {
     Name = "terraform-ec2"
