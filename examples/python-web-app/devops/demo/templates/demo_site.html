@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Django Deployment Success</title>
+
+<style>
+body {
+    margin:0;
+    height:100vh;
+    background: radial-gradient(circle at top, #0f172a, #020617);
+    font-family: 'Segoe UI', sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+.glass {
+    backdrop-filter: blur(18px);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 50px 70px;
+    text-align:center;
+    box-shadow: 0 0 60px rgba(56,189,248,0.25);
+    animation: fadeIn 1.2s ease;
+}
+
+h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg,#38bdf8,#22c55e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h2 {
+    color:#94a3b8;
+    font-weight:400;
+}
+
+.badge {
+    margin-top:25px;
+    display:inline-block;
+    padding:12px 25px;
+    border-radius:30px;
+    background: linear-gradient(90deg,#22c55e,#4ade80);
+    color:#022c22;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.footer {
+    margin-top:25px;
+    font-size:14px;
+    color:#64748b;
+}
+
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(30px);}
+    to { opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="glass">
+    <h1>🚀 Deployment Successful</h1>
+    <h2>Django running inside Docker Container</h2>
+
+    <div class="badge">
+        SYSTEM STATUS: ONLINE
+    </div>
+
+    <div class="footer">
+        DevOps Lab • EC2 • Docker • Django
+    </div>
+</div>
+
+</body>
+</html>
+
