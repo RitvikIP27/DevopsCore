@@ -1,19 +1,33 @@
-# Repo to learn Docker with examples. Contributions are most welcome.
+# 🐳 Django Containerized Web App  
+### Docker • AWS EC2 • Terraform • DevOps
 
-## If you found this repo useful, give it a STAR 🌠
+<p align="center">
+  <img src="https://img.shields.io/badge/Docker-Containerized-blue?logo=docker" />
+  <img src="https://img.shields.io/badge/Django-Web_App-green?logo=django" />
+  <img src="https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws" />
+  <img src="https://img.shields.io/badge/IaC-Terraform-purple?logo=terraform" />
+  <img src="https://img.shields.io/badge/Status-Deployed-success" />
+</p>
 
-You can watch the video version of this repo on my youtube playlist. -> https://www.youtube.com/watch?v=7JZP345yVjw&list=PLdpzxOOAlwvLjb0vTD9BXLOwwLD_GWCmC
+---
+
+## ✨ Overview
+
+This repository contains a **containerized Django web application** deployed on an **AWS EC2 instance**.
+
+The goal of this project was to move beyond traditional server-based deployments and package the application into a **portable, reproducible Docker image**, making deployments consistent across environments.
+
+This project complements my earlier work where infrastructure and configuration were automated using **Terraform** and **Ansible** — now the **application runtime itself is containerized**.
+
+<p align="center">
+  <img src="assets/deployment.png" width="700"/>
+</p>
+
+---
+
+## 🧱 Architecture
 
 
-## What is a container ?
-
-A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
-
-Ok, let me make it easy !!!
-
-A container is a bundle of Application, Application libraries required to run your application and the minimum system dependencies.
-
-![Screenshot 2023-02-07 at 7 18 10 PM](https://user-images.githubusercontent.com/43399466/217262726-7cabcb5b-074d-45cc-950e-84f7119e7162.png)
 
 
 
