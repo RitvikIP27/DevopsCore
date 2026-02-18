@@ -20,7 +20,7 @@ The goal of this project was to move beyond traditional server-based deployments
 This project complements my earlier work where infrastructure and configuration were automated using **Terraform** and **Ansible** — now the **application runtime itself is containerized**.
 
 <p align="center">
-  <img src="assets/deployment.png" width="700"/>
+  <img src="Deployed.png" width="700"/>
 </p>
 
 ---
@@ -168,30 +168,6 @@ When you use Docker, you are creating and using images, containers, networks, vo
 Dockerfile is a file where you provide the steps to build your Docker Image. 
 
 
-#### Images
-
-An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run.
-
-You might create your own images or you might only use those created by others and published in a registry. To build your own image, you create a Dockerfile with a simple syntax for defining the steps needed to create the image and run it. Each instruction in a Dockerfile creates a layer in the image. When you change the Dockerfile and rebuild the image, only those layers which have changed are rebuilt. This is part of what makes images so lightweight, small, and fast, when compared to other virtualization technologies.
-
-
-
-## INSTALL DOCKER
-
-A very detailed instructions to install Docker are provide in the below link
-
-https://docs.docker.com/get-docker/
-
-For Demo, 
-
-You can create an Ubuntu EC2 Instance on AWS and run the below commands to install docker.
-
-```
-sudo apt update
-sudo apt install docker.io -y
-```
-
-
 ### Start Docker and Grant Access
 
 A very common mistake that many beginners do is, After they install docker using the sudo access, they miss the step to Start the Docker daemon and grant acess to the user they want to use to interact with docker and run docker commands.
@@ -204,16 +180,7 @@ A easy way to verify your Docker installation is by running the below command
 docker run hello-world
 ```
 
-If the output says:
 
-```
-docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/create": dial unix /var/run/docker.sock: connect: permission denied.
-See 'docker run --help'.
-```
-
-This can mean two things, 
-1. Docker deamon is not running.
-2. Your user does not have access to run docker commands.
 
 
 ### Start Docker daemon
