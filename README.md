@@ -1,23 +1,28 @@
-# 🐳 Django Containerized Web App  
-### Docker • AWS EC2 • Terraform • DevOps
+# 🐳 Django Application – Production-Style Containerized Deployment  
+### Docker • Kubernetes • AWS EC2 • Terraform • DevOps
 
 <p align="center">
   <img src="https://img.shields.io/badge/Docker-Containerized-blue?logo=docker" />
+  <img src="https://img.shields.io/badge/Kubernetes-Orchestrated-blue?logo=kubernetes" />
   <img src="https://img.shields.io/badge/Django-Web_App-green?logo=django" />
   <img src="https://img.shields.io/badge/AWS-EC2-orange?logo=amazonaws" />
   <img src="https://img.shields.io/badge/IaC-Terraform-purple?logo=terraform" />
-  <img src="https://img.shields.io/badge/Status-Deployed-success" />
+  <img src="https://img.shields.io/badge/Status-Production_Style-success" />
 </p>
 
 ---
 
-## ✨ Overview
+## 📌 Overview
 
-This repository contains a **containerized Django web application** deployed on an **AWS EC2 instance**.
+This project demonstrates the evolution of a Django application from:
 
-The goal of this project was to move beyond traditional server-based deployments and package the application into a **portable, reproducible Docker image**, making deployments consistent across environments.
+- Local development  
+- Docker containerization  
+- AWS EC2 deployment  
+- Infrastructure automation using Terraform  
+- Kubernetes-based production-style orchestration  
 
-This project complements my earlier work where infrastructure and configuration were automated using **Terraform** and **Ansible** — now the **application runtime itself is containerized**.
+The goal was not just to run a container, but to deploy and manage an application using modern DevOps practices.
 
 <p align="center">
   <img src="Deployed.png" width="700"/>
@@ -25,284 +30,227 @@ This project complements my earlier work where infrastructure and configuration 
 
 ---
 
-## 🧱 Architecture
+# 🐳 Docker Implementation
 
+## Why Containers?
 
+Containers package the application along with its dependencies, making deployments consistent across environments.
 
+### Containers vs Virtual Machines
 
+1. Containers share the host OS kernel → lightweight & fast  
+2. VMs require a full OS + hypervisor → resource intensive  
+3. Containers are highly portable  
+4. VMs provide stronger isolation  
 
-## Containers vs Virtual Machine 
+### Why Containers Are Lightweight
 
-Containers and virtual machines are both technologies used to isolate applications and their dependencies, but they have some key differences:
+Containers share the host kernel and only include necessary runtime dependencies.
 
-    1. Resource Utilization: Containers share the host operating system kernel, making them lighter and faster than VMs. VMs have a full-fledged OS and hypervisor, making them more resource-intensive.
+Example:
 
-    2. Portability: Containers are designed to be portable and can run on any system with a compatible host operating system. VMs are less portable as they need a compatible hypervisor to run.
-
-    3. Security: VMs provide a higher level of security as each VM has its own operating system and can be isolated from the host and other VMs. Containers provide less isolation, as they share the host operating system.
-
-   4.  Management: Managing containers is typically easier than managing VMs, as containers are designed to be lightweight and fast-moving.
-
-
-
-## Why are containers light weight ?
-
-Containers are lightweight because they use a technology called containerization, which allows them to share the host operating system's kernel and libraries, while still providing isolation for the application and its dependencies. This results in a smaller footprint compared to traditional virtual machines, as the containers do not need to include a full operating system. Additionally, Docker containers are designed to be minimal, only including what is necessary for the application to run, further reducing their size.
-
-Let's try to understand this with an example:
-
-Below is the screenshot of official ubuntu base image which you can use for your container. It's just ~ 22 MB, isn't it very small ? on a contrary if you look at official ubuntu VM image it will be close to ~ 2.3 GB. So the container base image is almost 100 times less than VM image.
+Official Ubuntu base image (~22 MB) vs Ubuntu VM image (~2.3 GB).
 
 ![Screenshot 2023-02-08 at 3 12 38 PM](https://user-images.githubusercontent.com/43399466/217493284-85411ae0-b283-4475-9729-6b082e35fc7d.png)
 
+---
 
-To provide a better picture of files and folders that containers base images have and files and folders that containers use from host operating system (not 100 percent accurate -> varies from base image to base image). Refer below.
-
-
-
-### Files and Folders in containers base images
-
-```
-    /bin: contains binary executable files, such as the ls, cp, and ps commands.
-
-    /sbin: contains system binary executable files, such as the init and shutdown commands.
-
-    /etc: contains configuration files for various system services.
-
-    /lib: contains library files that are used by the binary executables.
-
-    /usr: contains user-related files and utilities, such as applications, libraries, and documentation.
-
-    /var: contains variable data, such as log files, spool files, and temporary files.
-
-    /root: is the home directory of the root user.
-```
-
-
-
-### Files and Folders that containers use from host operating system
-
-```
-    The host's file system: Docker containers can access the host file system using bind mounts, which allow the container to read and write files in the host file system.
-
-    Networking stack: The host's networking stack is used to provide network connectivity to the container. Docker containers can be connected to the host's network directly or through a virtual network.
-
-    System calls: The host's kernel handles system calls from the container, which is how the container accesses the host's resources, such as CPU, memory, and I/O.
-
-    Namespaces: Docker containers use Linux namespaces to create isolated environments for the container's processes. Namespaces provide isolation for resources such as the file system, process ID, and network.
-
-    Control groups (cgroups): Docker containers use cgroups to limit and control the amount of resources, such as CPU, memory, and I/O, that a container can access.
-    
-```
-
-It's important to note that while a container uses resources from the host operating system, it is still isolated from the host and other containers, so changes to the container do not affect the host or other containers.
-
-**Note:** There are multiple ways to reduce your VM image size as well, but I am just talking about the default for easy comparision and understanding.
-
-so, in a nutshell, container base images are typically smaller compared to VM images because they are designed to be minimalist and only contain the necessary components for running a specific application or service. VMs, on the other hand, emulate an entire operating system, including all its libraries, utilities, and system files, resulting in a much larger size. 
-
-I hope it is now very clear why containers are light weight in nature.
-
-
-
-## Docker
-
-
-### What is Docker ?
-
-Docker is a containerization platform that provides easy way to containerize your applications, which means, using Docker you can build container images, run the images to create containers and also push these containers to container regestries such as DockerHub, Quay.io and so on.
-
-In simple words, you can understand as `containerization is a concept or technology` and `Docker Implements Containerization`.
-
-
-### Docker Architecture ?
+## Docker Architecture
 
 ![image](https://user-images.githubusercontent.com/43399466/217507877-212d3a60-143a-4a1d-ab79-4bb615cb4622.png)
 
-The above picture, clearly indicates that Docker Deamon is brain of Docker. If Docker Deamon is killed, stops working for some reasons, Docker is brain dead :p (sarcasm intended).
+Docker Daemon (dockerd) manages images, containers, networks, and volumes.
 
-### Docker LifeCycle 
+---
 
-We can use the above Image as reference to understand the lifecycle of Docker.
+## Docker Lifecycle
 
-There are three important things,
-
-1. docker build -> builds docker images from Dockerfile
-2. docker run   -> runs container from docker images
-3. docker push  -> push the container image to public/private regestries to share the docker images.
+1. docker build  
+2. docker run  
+3. docker push  
 
 ![Screenshot 2023-02-08 at 4 32 13 PM](https://user-images.githubusercontent.com/43399466/217511949-81f897b2-70ee-41d1-b229-38d0572c54c7.png)
 
+---
 
+## Build & Push Image
 
-### Understanding the terminology (Inspired from Docker Docs)
-
-
-#### Docker daemon
-
-The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. A daemon can also communicate with other daemons to manage Docker services.
-
-
-#### Docker client
-
-The Docker client (docker) is the primary way that many Docker users interact with Docker. When you use commands such as docker run, the client sends these commands to dockerd, which carries them out. The docker command uses the Docker API. The Docker client can communicate with more than one daemon.
-
-
-#### Docker Desktop
-
-Docker Desktop is an easy-to-install application for your Mac, Windows or Linux environment that enables you to build and share containerized applications and microservices. Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. For more information, see Docker Desktop.
-
-
-#### Docker registries
-
-A Docker registry stores Docker images. Docker Hub is a public registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own private registry.
-
-When you use the docker pull or docker run commands, the required images are pulled from your configured registry. When you use the docker push command, your image is pushed to your configured registry.
-Docker objects
-
-When you use Docker, you are creating and using images, containers, networks, volumes, plugins, and other objects. This section is a brief overview of some of those objects.
-
-
-#### Dockerfile
-
-Dockerfile is a file where you provide the steps to build your Docker Image. 
-
-
-### Start Docker and Grant Access
-
-A very common mistake that many beginners do is, After they install docker using the sudo access, they miss the step to Start the Docker daemon and grant acess to the user they want to use to interact with docker and run docker commands.
-
-Always ensure the docker daemon is up and running.
-
-A easy way to verify your Docker installation is by running the below command
-
-```
-docker run hello-world
+```bash
+docker build -t ritvikkantip/python-web-app:v1 .
+docker push ritvikkantip/python-web-app:v1
 ```
 
+Verify:
 
-
-
-### Start Docker daemon
-
-You use the below command to verify if the docker daemon is actually started and Active
-
-```
-sudo systemctl status docker
-```
-
-If you notice that the docker daemon is not running, you can start the daemon using the below command
-
-```
-sudo systemctl start docker
-```
-
-
-### Grant Access to your user to run docker commands
-
-To grant access to your user to run the docker command, you should add the user to the Docker Linux group. Docker group is create by default when docker is installed.
-
-```
-sudo usermod -aG docker ubuntu
-```
-
-In the above command `ubuntu` is the name of the user, you can change the username appropriately.
-
-**NOTE:** : You need to logout and login back for the changes to be reflected.
-
-
-### Docker is Installed, up and running 🥳🥳
-
-Use the same command again, to verify that docker is up and running.
-
-```
-docker run hello-world
-```
-
-Output should look like:
-
-<p align="center">
-  <img src="dockerinit.png" width="700"/>
-</p>`
-
-
-## Great Job, Now start with the examples folder to write your first Dockerfile and move to the next examples. Happy Learning :)
-
-### Clone this repository and move to example folder
-
-```
-git clone https://github.com/RitvikIP27/DevopsCore/tree/main/examples
-cd  examples
-```
-
-### Login to Docker [Create an account with https://hub.docker.com/]
-
-```
-docker login
-```
-
-```
-Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
-Username: ritvikkantip
-Password:
-WARNING! Your password will be stored unencrypted in /home/ubuntu/.docker/config.json.
-Configure a credential helper to remove this warning. See
-https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-
-Login Succeeded
-```
-
-### Build your first Docker Image
-
-You need to change the username accoringly in the below command
-
-```
-docker build --t ritvikkantip/django-builder-image:latest .
-```
-
-Output of the above:
-<p align="center">
-  <img src="Dockerrun.png" width="700"/>
-</p>
-
-
-### Verify Docker Image is created
-
-```
+```bash
 docker images
 ```
-
-Output 
 
 <p align="center">
   <img src="image creation.png" width="700"/>
 </p>
 
-### Run your First Docker Container
+Run:
 
+```bash
+docker run -p 8000:8000 ritvikkantip/python-web-app:v1
 ```
-docker run -p 8000:8000 -it ritvikkantip/django-builder-iamge
-```
-
-Output
 
 <p align="center">
   <img src="Dockerrun.png" width="700"/>
 </p>
 
-### Push the Image to DockerHub and share it with the world
+Push Output:
 
-Output
-
-```
-Using default tag: latest
-The push refers to repository [docker.io/abhishekf5/my-first-docker-image]
-896818320e80: Pushed
-b8088c305a52: Pushed
-69dd4ccec1a0: Pushed
-c5ff2d88f679: Mounted from library/ubuntu
-latest: digest: sha256:6e49841ad9e720a7baedcd41f9b666fcd7b583151d0763fe78101bb8221b1d88 size: 1157
-```
 <p align="center">
   <img src="Docker registry.png" width="700"/>
 </p>
+
+---
+
+# ☁️ Infrastructure Provisioning (Terraform)
+
+Infrastructure was provisioned using Terraform to automate:
+
+- EC2 instance creation  
+- Networking configuration  
+- Security groups  
+
+This ensured reproducibility and eliminated manual provisioning.
+
+---
+
+# ☸️ Kubernetes Deployment (Production-Style Upgrade)
+
+Minikube was used as a sample Kubernetes cluster.
+
+---
+
+## Deployment Configuration
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-python-app
+  template:
+    metadata:
+      labels:
+        app: sample-python-app
+    spec:
+      containers:
+      - name: sample-python-app
+        image: ritvikkantip/python-web-app:v1
+        ports:
+        - containerPort: 8000
+```
+
+Apply:
+
+```bash
+kubectl apply -f deployment.yml
+```
+
+---
+
+## Service Configuration
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-deployment-service
+spec:
+  type: NodePort
+  selector:
+    app: sample-python-app
+  ports:
+    - port: 80
+      targetPort: 8000
+      nodePort: 30007
+```
+
+Apply:
+
+```bash
+kubectl apply -f service.yml
+```
+
+Traffic Flow:
+
+External Client → NodePort → Service → Pod
+
+---
+
+# 🔍 Debugging & Service Discovery
+
+Initially, NodePort was unreachable.
+
+Diagnosis:
+
+```bash
+kubectl get endpoints
+```
+
+Returned `<none>`.
+
+Root Cause:
+Service selector did not match Deployment labels.
+
+Fix:
+Aligned labels → endpoints registered → traffic restored.
+
+Key Insight:
+Kubernetes Services are entirely label-driven.
+
+---
+
+# 📊 Observability with Kubeshark
+
+Used Kubeshark to:
+
+- Monitor real-time Service-to-Pod traffic  
+- Observe load balancing across replicas  
+- Validate traffic distribution  
+
+This confirmed requests were evenly distributed across pods.
+
+---
+
+# 🏗 Production Considerations
+
+Minikube was used for development.
+
+In a real organizational environment:
+
+- Multi-node cluster provisioned using KOPS  
+- LoadBalancer or Ingress for controlled exposure  
+- CI/CD integration  
+- Secure secret management  
+- Proper networking & IAM configuration  
+
+---
+
+# 🎯 Key Learnings
+
+- Containerization ensures portability  
+- Deployments enable scalability & rolling updates  
+- Services rely strictly on label-selector matching  
+- `kubectl get endpoints` is critical for debugging  
+- Observability validates behavior beyond YAML  
+
+---
+
+# 📬 Conclusion
+
+This project reflects a transition from:
+
+Single Docker container  
+→ Infrastructure automation  
+→ Orchestrated Kubernetes workload  
+→ Production-style deployment architecture
