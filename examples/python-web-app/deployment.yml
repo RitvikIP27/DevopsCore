@@ -17,6 +17,9 @@ spec:
       containers:
       - name: sample-python-app
         image: ritvikkantip/python-web-app:v1 
+        envFrom:
+          - configMapRef: 
+             name: myconfigmap
         ports:
         - containerPort: 8000
 
